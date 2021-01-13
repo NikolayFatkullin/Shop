@@ -44,16 +44,12 @@ public class CarServiceImpl implements CarService {
     @Override
     public void addDriverToCar(Driver driver, Car car) {
         car.getDrivers().add(driver);
-        if (carDao.get(car.getId()).isEmpty()) {
-            carDao.create(car);
-        } else {
-            carDao.update(car);
-        }
+        carDao.update(car);
     }
 
     @Override
     public void removeDriverFromCar(Driver driver, Car car) {
-        carDao.get(car.getId()).get().getDrivers().removeIf(d -> d.equals(driver));
+        car.getDrivers().remove(driver);
         carDao.update(car);
     }
 
