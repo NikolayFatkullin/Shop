@@ -10,9 +10,9 @@ public class Storage {
     public static final List<Manufacturer> manufacturers = new ArrayList<>();
     public static final List<Car> cars = new ArrayList<>();
     public static final List<Driver> drivers = new ArrayList<>();
-    public static long manufacturerId = 0;
-    public static long carId = 0;
-    public static long driverId = 0;
+    public static Long manufacturerId = 0L;
+    public static Long carId = 0L;
+    public static Long driverId = 0L;
 
     public static void addManufacturer(Manufacturer manufacturer) {
         manufacturerId++;
