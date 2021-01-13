@@ -8,7 +8,6 @@ import com.shop.model.Car;
 import com.shop.model.Driver;
 import com.shop.service.CarService;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class CarServiceImpl implements CarService {
