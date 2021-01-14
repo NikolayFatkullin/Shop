@@ -94,5 +94,6 @@ public class Application {
         System.out.println(manufacturerService.getAll());
         System.out.println(carService.getAll());
         System.out.println(driverService.getAll());
+
     }
 }
