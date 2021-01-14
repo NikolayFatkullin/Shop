@@ -2,13 +2,11 @@ package com.shop.dao.impl;
 
 import com.shop.dao.ManufacturerDao;
 import com.shop.db.Storage;
-import com.shop.lib.Dao;
 import com.shop.model.Manufacturer;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
-@Dao
 public class ManufacturerDaoImpl implements ManufacturerDao {
     @Override
     public Manufacturer create(Manufacturer manufacturer) {
