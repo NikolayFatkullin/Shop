@@ -6,10 +6,13 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class ConnectionUtil {
+    private static final String USER = "root";
+    private static final String PASSWORD = "1234";
+
     public static Connection getConnection() {
         Properties dbProperties = new Properties();
-        dbProperties.put("user", "root");
-        dbProperties.put("password", "1234");
+        dbProperties.put("user", USER);
+        dbProperties.put("password", PASSWORD);
         String url = "jdbc:mysql://localhost:3306/shop?serverTimezone=UTC";
         try {
             return DriverManager.getConnection(url, dbProperties);

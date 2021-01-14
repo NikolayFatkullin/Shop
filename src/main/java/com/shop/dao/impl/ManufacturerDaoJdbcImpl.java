@@ -52,6 +52,7 @@ public class ManufacturerDaoJdbcImpl implements ManufacturerDao {
             if (resultSet.next()) {
                 manufacturer = getManufacturer(resultSet);
             }
+            statement.close();
             resultSet.close();
             return Optional.ofNullable(manufacturer);
         } catch (SQLException ex) {
@@ -69,6 +70,7 @@ public class ManufacturerDaoJdbcImpl implements ManufacturerDao {
             while (resultSet.next()) {
                 manufacturers.add(getManufacturer(resultSet));
             }
+            statement.close();
             resultSet.close();
         } catch (SQLException ex) {
             throw new DataProcessingException("Can't get all manufacturers", ex);
@@ -102,6 +104,7 @@ public class ManufacturerDaoJdbcImpl implements ManufacturerDao {
             PreparedStatement statement = connection.prepareStatement(delete);
             statement.setLong(1, id);
             result = statement.executeUpdate();
+            statement.close();
             return result > 0;
         } catch (SQLException ex) {
             throw new DataProcessingException("Can't delete manufacturer with id:" + id, ex);
