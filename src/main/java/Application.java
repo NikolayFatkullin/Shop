@@ -23,7 +23,7 @@ public class Application {
 
         System.out.println(manufacturerService.getAll());
 
-        System.out.println(manufacturerService.get(1L));
+        System.out.println(manufacturerService.get(2L));
 
         Manufacturer manufacturerUpdated = new Manufacturer("Toyota", "Japan");
         manufacturerUpdated.setId(1L);
@@ -53,7 +53,7 @@ public class Application {
         System.out.println(driverService.getAll());
 
         CarService carService = (CarService) injector.getInstance(CarService.class);
-        Car firstCar = new Car("Panamera", manufacturerService.get(1L));
+        Car firstCar = new Car("Panamera", manufacturerService.get(3L));
         Car secondCar = new Car("Camaro", manufacturerService.get(2L));
         Car thirdCar = new Car("A3", manufacturerService.get(3L));
 
@@ -62,7 +62,7 @@ public class Application {
         carService.create(thirdCar);
 
         System.out.println(carService.getAll());
-        System.out.println(carService.get(1L));
+        System.out.println(carService.get(3L));
 
         Car carUpdated = new Car("Corola", manufacturerService.get(1L));
         carUpdated.setId(1L);
