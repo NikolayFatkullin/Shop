@@ -90,16 +90,11 @@ public class DriverDaoJdbcImpl implements DriverDao {
     public boolean delete(Long id) {
         String delete = "UPDATE drivers SET deleted = true "
                 + "WHERE id = ?";
-        String deleteConnections = "DELETE FROM cars_drivers WHERE driver_id = ?";
         int result;
         try (Connection connection = ConnectionUtil.getConnection();
-                PreparedStatement statement = connection.prepareStatement(delete);
-                PreparedStatement deleteConnection = connection
-                        .prepareStatement(deleteConnections)) {
+                PreparedStatement statement = connection.prepareStatement(delete)) {
             statement.setLong(1, id);
-            deleteConnection.setLong(1, id);
             result = statement.executeUpdate();
-            deleteConnection.executeUpdate();
             return result > 0;
         } catch (SQLException ex) {
             throw new DataProcessingException("Can't delete driver with id:" + id, ex);
