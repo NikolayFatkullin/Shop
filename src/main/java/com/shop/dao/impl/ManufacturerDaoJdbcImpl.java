@@ -19,7 +19,7 @@ public class ManufacturerDaoJdbcImpl implements ManufacturerDao {
 
     @Override
     public Manufacturer create(Manufacturer manufacturer) {
-        String create = "INSERT INTO manufacturer (manufacturer_name, manufacturer_country) "
+        String create = "INSERT INTO manufacturer (name, country) "
                 + "VALUES(?, ?)";
         try (Connection connection = ConnectionUtil.getConnection();
                 PreparedStatement statement = connection
@@ -41,7 +41,7 @@ public class ManufacturerDaoJdbcImpl implements ManufacturerDao {
     @Override
     public Optional<Manufacturer> get(Long id) {
         String select = "SELECT * FROM manufacturer WHERE id = ? "
-                + "AND manufacturer_deleted = false";
+                + "AND deleted = false";
         Manufacturer manufacturer = null;
         try (Connection connection = ConnectionUtil.getConnection();
                 PreparedStatement statement = connection.prepareStatement(select)) {
@@ -59,7 +59,7 @@ public class ManufacturerDaoJdbcImpl implements ManufacturerDao {
 
     @Override
     public List<Manufacturer> getAll() {
-        String selectAll = "SELECT * FROM manufacturer WHERE manufacturer_deleted = false";
+        String selectAll = "SELECT * FROM manufacturer WHERE deleted = false";
         List<Manufacturer> manufacturers = new ArrayList<>();
         try (Connection connection = ConnectionUtil.getConnection();
                 PreparedStatement statement = connection.prepareStatement(selectAll)) {
@@ -75,8 +75,8 @@ public class ManufacturerDaoJdbcImpl implements ManufacturerDao {
 
     @Override
     public Manufacturer update(Manufacturer manufacturer) {
-        String update = "UPDATE manufacturer SET manufacturer_name = ?, manufacturer_country = ? "
-                + "WHERE id = ? AND manufacturer_deleted = false";
+        String update = "UPDATE manufacturer SET name = ?, country = ? "
+                + "WHERE id = ? AND deleted = false";
         try (Connection connection = ConnectionUtil.getConnection();
                 PreparedStatement statement = connection.prepareStatement(update)) {
             statement.setString(1, manufacturer.getName());
@@ -91,7 +91,7 @@ public class ManufacturerDaoJdbcImpl implements ManufacturerDao {
 
     @Override
     public boolean delete(Long id) {
-        String delete = "UPDATE manufacturer SET manufacturer_deleted = true "
+        String delete = "UPDATE manufacturer SET deleted = true "
                 + "WHERE id = ?";
         int result;
         try (Connection connection = ConnectionUtil.getConnection();
@@ -107,8 +107,8 @@ public class ManufacturerDaoJdbcImpl implements ManufacturerDao {
     private Manufacturer getManufacturer(ResultSet resultSet) {
         try {
             Long manufacturerId = resultSet.getObject("id", Long.class);
-            String name = resultSet.getString("manufacturer_name");
-            String country = resultSet.getString("manufacturer_country");
+            String name = resultSet.getString("name");
+            String country = resultSet.getString("country");
             Manufacturer manufacturer = new Manufacturer(name, country);
             manufacturer.setId(manufacturerId);
             return manufacturer;
