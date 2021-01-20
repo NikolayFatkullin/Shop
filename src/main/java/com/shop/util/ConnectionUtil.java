@@ -7,7 +7,15 @@ import java.util.Properties;
 
 public class ConnectionUtil {
     private static final String USER = "root";
-    private static final String PASSWORD = "1234";
+    private static final String PASSWORD = "root";
+
+    static {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("Can't find SQL Driver", e);
+        }
+    }
 
     public static Connection getConnection() {
         Properties dbProperties = new Properties();
