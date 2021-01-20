@@ -1,8 +1,8 @@
-package com.shop.controller.drivers;
+package com.shop.controller.cars;
 
 import com.shop.lib.Injector;
-import com.shop.model.Driver;
-import com.shop.service.DriverService;
+import com.shop.model.Car;
+import com.shop.service.CarService;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -10,16 +10,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class AllDriversController extends HttpServlet {
+public class GetAllCarsController extends HttpServlet {
     private static final Injector injector = Injector.getInstance("com.shop");
-    private final DriverService driverService = (DriverService) injector
-            .getInstance(DriverService.class);
+    private final CarService carService = (CarService) injector
+            .getInstance(CarService.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        List<Driver> driverList = driverService.getAll();
-        req.setAttribute("drivers", driverList);
-        req.getRequestDispatcher("/WEB-INF/views/drivers/all.jsp").forward(req, resp);
+        List<Car> cars = carService.getAll();
+        req.setAttribute("cars", cars);
+        req.getRequestDispatcher("/WEB-INF/views/cars/all-cars.jsp").forward(req, resp);
     }
 }
