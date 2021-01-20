@@ -6,7 +6,7 @@
 <body>
 <h1>Please enter data about driver</h1>
 
-<form method="post" action="${pageContext.request.contextPath}/drivers/create-drivers">
+<form method="post" action="${pageContext.request.contextPath}/driver/create-drivers">
     Please provide driver name<input type="text" name="name">
     Please provide driver license number<input type="text" name="licenseNumber">
 

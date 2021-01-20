@@ -1,4 +1,4 @@
-package com.shop.controller.cars.drivers;
+package com.shop.controller.car.driver;
 
 import com.shop.lib.Injector;
 import com.shop.service.CarService;
@@ -19,7 +19,7 @@ public class AddDriverToCarController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        req.getRequestDispatcher("/WEB-INF/views/cars/drivers/add-drivers-to-car.jsp")
+        req.getRequestDispatcher("/WEB-INF/views/car/driver/add-drivers-to-car.jsp")
                 .forward(req, resp);
     }
 
@@ -29,6 +29,6 @@ public class AddDriverToCarController extends HttpServlet {
         Long carId = Long.valueOf(req.getParameter("carId"));
         Long driverId = Long.valueOf(req.getParameter("driverId"));
         carService.addDriverToCar(driverService.get(driverId), carService.get(carId));
-        resp.sendRedirect(req.getContextPath() + "/cars/all-cars");
+        resp.sendRedirect(req.getContextPath() + "/car/all-cars");
     }
 }

@@ -1,7 +1,7 @@
 package com.shop.dao.impl;
 
 import com.shop.dao.CarDao;
-import com.shop.exceptions.DataProcessingException;
+import com.shop.exception.DataProcessingException;
 import com.shop.lib.Dao;
 import com.shop.model.Car;
 import com.shop.model.Driver;

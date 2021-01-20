@@ -1,4 +1,4 @@
-package com.shop.controller.manufacturers;
+package com.shop.controller.manufacturer;
 
 import com.shop.lib.Injector;
 import com.shop.service.ManufacturerService;
@@ -18,6 +18,6 @@ public class DeleteManufacturerController extends HttpServlet {
             throws ServletException, IOException {
         Long manufacturerId = Long.valueOf(req.getParameter("id"));
         manufacturerService.delete(manufacturerId);
-        resp.sendRedirect(req.getContextPath() + "/manufacturers/all-manufacturers");
+        resp.sendRedirect(req.getContextPath() + "/manufacturer/all-manufacturers");
     }
 }
