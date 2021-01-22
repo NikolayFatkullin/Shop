@@ -1,7 +1,5 @@
 package com.shop.web.filter;
 
-import com.shop.lib.Injector;
-import com.shop.service.DriverService;
 import java.io.IOException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -13,9 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class AuthenticationFilter implements Filter {
-    private static final Injector injector = Injector.getInstance("com.shop");
-    private final DriverService driverService = (DriverService)
-            injector.getInstance(DriverService.class);
+    private static final String DRIVER_ID = "driver_id";
 
     @Override
     public void init(FilterConfig filterConfig) {
@@ -32,8 +28,8 @@ public class AuthenticationFilter implements Filter {
             filterChain.doFilter(httpServletRequest, httpServletResponse);
             return;
         }
-        Long driverId = (Long) httpServletRequest.getSession().getAttribute("driver_id");
-        if (driverId == null || driverService.get(driverId) == null) {
+        Long driverId = (Long) httpServletRequest.getSession().getAttribute(DRIVER_ID);
+        if (driverId == null) {
             httpServletResponse.sendRedirect("/login");
             return;
         }
