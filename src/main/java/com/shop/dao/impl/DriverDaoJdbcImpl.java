@@ -18,12 +18,15 @@ import java.util.Optional;
 public class DriverDaoJdbcImpl implements DriverDao {
     @Override
     public Driver create(Driver driver) {
-        String create = "INSERT INTO drivers (name, license_number) values(?, ?)";
+        String create = "INSERT INTO drivers (name, license_number, login, password) "
+                + "values(?, ?, ?, ?)";
         try (Connection connection = ConnectionUtil.getConnection();
                 PreparedStatement statement = connection.prepareStatement(create,
                         Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, driver.getName());
             statement.setString(2, driver.getLicenseNumber());
+            statement.setString(3, driver.getLogin());
+            statement.setString(4, driver.getPassword());
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
             if (resultSet.next()) {
@@ -72,13 +75,15 @@ public class DriverDaoJdbcImpl implements DriverDao {
 
     @Override
     public Driver update(Driver driver) {
-        String update = "UPDATE drivers SET name = ?, license_number = ? "
+        String update = "UPDATE drivers SET name = ?, license_number = ?, login = ?, password = ? "
                 + "WHERE id = ? AND deleted = false";
         try (Connection connection = ConnectionUtil.getConnection();
                 PreparedStatement statement = connection.prepareStatement(update)) {
             statement.setString(1, driver.getName());
             statement.setString(2, driver.getLicenseNumber());
-            statement.setLong(3, driver.getId());
+            statement.setString(3, driver.getLogin());
+            statement.setString(4, driver.getPassword());
+            statement.setLong(5, driver.getId());
             statement.executeUpdate();
             return driver;
         } catch (SQLException ex) {
@@ -106,11 +111,34 @@ public class DriverDaoJdbcImpl implements DriverDao {
             Long driverId = resultSet.getObject("id", Long.class);
             String name = resultSet.getString("name");
             String licenseNumber = resultSet.getString("license_number");
+            String login = resultSet.getString("login");
+            String password = resultSet.getString("password");
             Driver driver = new Driver(name, licenseNumber);
+            driver.setLogin(login);
+            driver.setPassword(password);
             driver.setId(driverId);
             return driver;
         } catch (SQLException ex) {
             throw new DataProcessingException("Can't create driver from ResultSet", ex);
+        }
+    }
+
+    @Override
+    public Optional<Driver> findByLogin(String login) {
+        String select = "SELECT * FROM drivers WHERE login = ? "
+                + "AND deleted = false";
+        Driver driver = null;
+        try (Connection connection = ConnectionUtil.getConnection();
+                PreparedStatement statement = connection.prepareStatement(select)) {
+            statement.setString(1, login);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                driver = getDriver(resultSet);
+            }
+
+            return Optional.ofNullable(driver);
+        } catch (SQLException ex) {
+            throw new DataProcessingException("Can't find driver by login " + login, ex);
         }
     }
 }
