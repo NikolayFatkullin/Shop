@@ -1,7 +1,7 @@
 package com.shop.dao.impl;
 
 import com.shop.dao.ManufacturerDao;
-import com.shop.exceptions.DataProcessingException;
+import com.shop.exception.DataProcessingException;
 import com.shop.lib.Dao;
 import com.shop.model.Manufacturer;
 import com.shop.util.ConnectionUtil;
