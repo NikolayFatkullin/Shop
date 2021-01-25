@@ -1,6 +1,9 @@
 package com.shop.web.filter;
 
 import java.io.IOException;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -12,10 +15,12 @@ import javax.servlet.http.HttpServletResponse;
 
 public class AuthenticationFilter implements Filter {
     private static final String DRIVER_ID = "driver_id";
+    private static final Set<String> urls = new LinkedHashSet<>();
 
     @Override
     public void init(FilterConfig filterConfig) {
-
+        urls.add("/login");
+        urls.add("/drivers/create");
     }
 
     @Override
@@ -24,7 +29,7 @@ public class AuthenticationFilter implements Filter {
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
         HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
         String url = httpServletRequest.getServletPath();
-        if (url.equals("/login") || url.equals("/drivers/create")) {
+        if (urls.contains(url)) {
             filterChain.doFilter(httpServletRequest, httpServletResponse);
             return;
         }

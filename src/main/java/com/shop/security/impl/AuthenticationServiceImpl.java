@@ -6,6 +6,7 @@ import com.shop.lib.Service;
 import com.shop.model.Driver;
 import com.shop.security.AuthenticationService;
 import com.shop.service.DriverService;
+import java.util.Optional;
 
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
@@ -14,10 +15,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public Driver login(String login, String password) throws AuthenticationException {
-        Driver driverFromDb = driverService.findByLogin(login).orElseThrow(() ->
-                new AuthenticationException("Incorrect username or password"));
-        if (driverFromDb.getPassword().equals(password)) {
-            return driverFromDb;
+        Optional<Driver> driverFromDB = driverService.findByLogin(login);
+        if (driverFromDB.isPresent() && driverFromDB.get().getPassword().equals(password)) {
+            return driverFromDB.get();
         }
         throw new AuthenticationException("Incorrect username or password");
     }
